@@ -28,6 +28,10 @@
         <module name="common-exceptions" />
         <module name="common-protocol" />
         <module name="common-router" />
+        <module name="messenger-api" />
+        <module name="messenger-impl" />
+        <module name="profile-api" />
+        <module name="profile-impl" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -40,6 +44,12 @@
       <module name="common-protocol" target="1.8" />
       <module name="common-router" target="1.8" />
       <module name="frontend" target="1.5" />
+      <module name="messenger" target="1.5" />
+      <module name="messenger-api" target="1.5" />
+      <module name="messenger-impl" target="1.5" />
+      <module name="profile" target="1.5" />
+      <module name="profile-api" target="1.5" />
+      <module name="profile-impl" target="1.5" />
       <module name="services" target="1.5" />
       <module name="softgroup" target="1.5" />
     </bytecodeTargetLevel>
