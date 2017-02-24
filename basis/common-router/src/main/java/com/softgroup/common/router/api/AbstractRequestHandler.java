@@ -6,15 +6,14 @@ import com.softgroup.common.protocol.RequestData;
 import com.softgroup.common.protocol.Response;
 import com.softgroup.common.protocol.ResponseData;
 
-public class AbstractRequestHandler<T extends RequestData, R extends ResponseData> implements RequestHandler {
+public abstract class AbstractRequestHandler<T extends RequestData, R extends ResponseData> implements RequestHandler<T, R> {
 	@Override
 	public String getName() {
 		return null;
 	}
 
 	@Override
-	public Response<R> handle(Request<?> msg) {
+	public Response<R> handle(Request<T> msg) {
 		return null;
 	}
-
 }
