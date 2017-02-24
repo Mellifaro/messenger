@@ -4,16 +4,33 @@ import com.softgroup.common.protocol.Request;
 import com.softgroup.common.protocol.RequestData;
 import com.softgroup.common.protocol.Response;
 import com.softgroup.common.protocol.ResponseData;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class AbstractRouterHandler<T extends Handler, K extends RequestData, R extends ResponseData> implements RouterHandler<K, R> {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-	@Override
-	public String getRouteKey(Request<K> msg) {
-		return null;
+public abstract class AbstractRouterHandler<T extends Handler> implements RouterHandler {
+
+	@Autowired
+	private List<T> handlers;
+	private Map<String, T> handlerMap;
+
+	public AbstractRouterHandler() {
+		handlerMap = new HashMap<>();
+		for(T handler : handlers){
+			handlerMap.put(handler.getName(), handler);
+		}
 	}
 
 	@Override
-	public Response<R> handle(Request<K> msg) {
-		return null;
+	public String getRouteKey(Request msg) {
+		return msg.getHeader().getCommand();
+	}
+
+	@Override
+	public Response handle(Request msg) {
+		Handler handler = handlerMap.get(getRouteKey(msg));
+		return handler.handle(msg);
 	}
 }
