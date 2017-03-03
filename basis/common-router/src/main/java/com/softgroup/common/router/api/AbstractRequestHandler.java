@@ -8,13 +8,9 @@ import com.softgroup.common.protocol.ResponseData;
 
 public abstract class AbstractRequestHandler<T extends RequestData, R extends ResponseData> implements RequestHandler {
 	@Override
-	public String getName() {
-		return null;
-	}
+	public abstract String getName();
 
 	@Override
-	public Response<R> handle(Request<?> msg) {
-		return null;
-	}
+	public abstract Response<R> handle(Request<?> msg);
 
 }
