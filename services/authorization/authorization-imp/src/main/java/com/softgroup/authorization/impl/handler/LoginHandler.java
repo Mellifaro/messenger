@@ -14,9 +14,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginHandler extends AbstractRequestHandler<LoginRequest, LoginResponse>
                           implements AuthorizationRequestHandler{
+
+    private static final String HANDLER_NAME = "login";
+
     @Override
     public String getName() {
-        return "login";
+        return HANDLER_NAME;
     }
 
     @Override

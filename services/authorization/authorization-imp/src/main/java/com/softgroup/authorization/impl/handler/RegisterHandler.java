@@ -14,9 +14,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterHandler extends AbstractRequestHandler<RegisterRequest, RegisterResponse>
                              implements AuthorizationRequestHandler {
+
+    private static final String HANDLER_NAME = "register";
+
     @Override
     public String getName() {
-        return "register";
+        return HANDLER_NAME;
     }
 
     public Response<RegisterResponse> handle(Request<?> msg) {

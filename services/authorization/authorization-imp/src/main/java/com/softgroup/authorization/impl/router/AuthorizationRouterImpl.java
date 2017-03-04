@@ -8,6 +8,7 @@ import com.softgroup.common.router.api.AbstractRouterHandler;
 import com.softgroup.common.router.api.Handler;
 import com.softgroup.common.router.api.factories.HandlerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,15 +18,23 @@ import org.springframework.stereotype.Component;
 public class AuthorizationRouterImpl extends AbstractRouterHandler<AuthorizationRequestHandler>
                                      implements AuthorizationRouterHandler{
 
+    private static final String ROUTER_NAME = "authorization";
+
     @Autowired
+    @Qualifier("commandHandlerFactory")
     private HandlerFactory<AuthorizationRequestHandler> commandHandlerFactory;
 
     public String getName() {
-        return "authorization";
+        return ROUTER_NAME;
+    }
+
+    public String getRouteKey(Request<?> msg) {
+        return msg.getHeader().getCommand();
     }
 
     public Response<?> handle(Request<?> msg) {
-        Handler handler = commandHandlerFactory.getHandler(msg);
+        String routeKey = getRouteKey(msg);
+        Handler handler = commandHandlerFactory.getHandler(routeKey);
         return handler.handle(msg);
     }
 }

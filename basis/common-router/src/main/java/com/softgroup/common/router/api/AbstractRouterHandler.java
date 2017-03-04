@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class AbstractRouterHandler<T extends Handler> implements RouterHandler {
 
 	@Override
-	public String getRouteKey(Request<?> msg) {
-		return null;
-	}
+	public abstract String getRouteKey(Request<?> msg);
 
 	@Override
 	public abstract Response<?> handle(Request<?> msg);

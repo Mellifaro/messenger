@@ -15,21 +15,6 @@ import java.util.stream.Collectors;
  * Created by Виктор on 03.03.2017.
  */
 @Component
-public class TypeHandlerFactory<T extends Handler> implements HandlerFactory<T> {
+public class TypeHandlerFactory<T extends Handler> extends AbstractHandlerFactory<T> {
 
-    private Map<String, Handler> handlerMap;
-
-    @Autowired
-    private List<T> handlerList;
-
-    @PostConstruct
-    public void init(){
-        handlerMap = handlerList.stream()
-                .collect(Collectors.toMap(Handler::getName, Function.identity()));
-    }
-
-    @Override
-    public Handler getHandler(Request<?> msg) {
-        return handlerMap.get(msg.getHeader().getType());
-    }
 }
