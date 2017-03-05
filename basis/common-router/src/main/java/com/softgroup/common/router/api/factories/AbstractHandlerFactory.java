@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractHandlerFactory<T extends Handler> implements HandlerFactory<T>{
 
-    private Map<String, Handler> handlerMap;
+    private Map<String, T> handlerMap;
 
     @Autowired
     private List<T> handlerList;

@@ -21,8 +21,8 @@ public class AuthorizationRouterImpl extends AbstractRouterHandler<Authorization
     private static final String ROUTER_NAME = "authorization";
 
     @Autowired
-    @Qualifier("commandHandlerFactory")
-    private HandlerFactory<AuthorizationRequestHandler> commandHandlerFactory;
+    @Qualifier("authHandlerFactory")
+    private HandlerFactory authHandlerFactory;
 
     public String getName() {
         return ROUTER_NAME;
@@ -33,8 +33,7 @@ public class AuthorizationRouterImpl extends AbstractRouterHandler<Authorization
     }
 
     public Response<?> handle(Request<?> msg) {
-        String routeKey = getRouteKey(msg);
-        Handler handler = commandHandlerFactory.getHandler(routeKey);
-        return handler.handle(msg);
+        Handler handler = authHandlerFactory.getHandler(getRouteKey(msg));
+        return handler == null ? null : handler.handle(msg);
     }
 }
