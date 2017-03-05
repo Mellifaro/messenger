@@ -20,20 +20,11 @@ public class AuthorizationRouterImpl extends AbstractRouterHandler<Authorization
 
     private static final String ROUTER_NAME = "authorization";
 
-    @Autowired
-    @Qualifier("authHandlerFactory")
-    private HandlerFactory authHandlerFactory;
-
     public String getName() {
         return ROUTER_NAME;
     }
 
     public String getRouteKey(Request<?> msg) {
         return msg.getHeader().getCommand();
-    }
-
-    public Response<?> handle(Request<?> msg) {
-        Handler handler = authHandlerFactory.getHandler(getRouteKey(msg));
-        return handler == null ? null : handler.handle(msg);
     }
 }

@@ -14,7 +14,5 @@ import java.util.stream.Collectors;
 /**
  * Created by Виктор on 03.03.2017.
  */
-@Component
 public class TypeHandlerFactory<T extends Handler> extends AbstractHandlerFactory<T> {
-
 }

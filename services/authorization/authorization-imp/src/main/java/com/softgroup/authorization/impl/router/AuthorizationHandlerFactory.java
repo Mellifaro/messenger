@@ -8,5 +8,5 @@ import org.springframework.stereotype.Component;
  * Created by Виктор on 05.03.2017.
  */
 @Component
-public class AuthHandlerFactory extends AbstractHandlerFactory<AuthorizationRequestHandler>{
+public class AuthorizationHandlerFactory extends AbstractHandlerFactory<AuthorizationRequestHandler> {
 }

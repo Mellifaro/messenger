@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
  * Created by Виктор on 04.03.2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AuthorizationAppCfg.class})
+@ContextConfiguration(classes = {CommonRouterAppCfg.class, AuthorizationAppCfg.class})
 public class AuthorizationRouterImplIT {
 
     @Autowired
