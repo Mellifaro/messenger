@@ -1,17 +1,17 @@
-package com.softgroup.generalrouting.impl.router;
+package com.softgroup.common.router.api.mainRouterImpl;
 
 import com.softgroup.common.protocol.Request;
 import com.softgroup.common.router.api.AbstractRouterHandler;
+import com.softgroup.common.router.api.routers.MainRouterHandler;
 import com.softgroup.common.router.api.routers.TypeRouterHandler;
-import com.softgroup.generalrouting.api.router.GenerealRouterHandler;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Виктор on 08.03.2017.
+ * Created by Виктор on 13.03.2017.
  */
 @Component
-public class GeneralRouterHandlerImpl extends AbstractRouterHandler<TypeRouterHandler>
-                                      implements GenerealRouterHandler{
+public class MainRouterHandlerImpl extends AbstractRouterHandler<TypeRouterHandler>
+                                   implements MainRouterHandler {
 
     public static final String NAME = "global_router";
 

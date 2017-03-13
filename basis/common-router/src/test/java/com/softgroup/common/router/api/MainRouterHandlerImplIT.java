@@ -1,38 +1,32 @@
-package com.softgroup.generalrouting.impl;
+package com.softgroup.common.router.api;
 
 import com.softgroup.common.protocol.ActionHeader;
 import com.softgroup.common.protocol.Request;
-import com.softgroup.common.router.api.Handler;
-import com.softgroup.common.router.api.RouterHandler;
 import com.softgroup.common.router.api.configuration.CommonRouterAppCfg;
+import com.softgroup.common.router.api.routers.MainRouterHandler;
 import com.softgroup.common.router.api.routers.TypeRouterHandler;
-import com.softgroup.generalrouting.api.router.GenerealRouterHandler;
-import com.softgroup.generalrouting.impl.configuration.GeneralRoutingAppCfg;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.Serializable;
-
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by Виктор on 10.03.2017.
+ * Created by Виктор on 13.03.2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {GeneralRouterHandlerImplIT.GenRouteTestCfg.class, CommonRouterAppCfg.class, GeneralRoutingAppCfg.class})
-public class GeneralRouterHandlerImplIT {
+@ContextConfiguration(classes = {MainRouterHandlerImplIT.MainRouterTestCfg.class, CommonRouterAppCfg.class})
+public class MainRouterHandlerImplIT {
 
     @Autowired
-    private GenerealRouterHandler ganeralRouter;
+    private MainRouterHandler mainRouter;
 
     @Autowired
     @Qualifier("authorization")
@@ -48,12 +42,12 @@ public class GeneralRouterHandlerImplIT {
 
     @Test
     public void testRoute(){
-        Request<?> request = new Request<Serializable>();
+        Request<?> request = new Request<>();
         ActionHeader actionHeader = new ActionHeader();
         actionHeader.setType("authorization");
         request.setHeader(actionHeader);
 
-        ganeralRouter.handle(request);
+        mainRouter.handle(request);
 
         verify(authHandler).handle(request);
         verify(profileHandler, never()).handle(any(Request.class));
@@ -62,18 +56,18 @@ public class GeneralRouterHandlerImplIT {
 
     @Test
     public void testOnlyTypeRoutersExistInGeneralRouter(){
-        Request<?> request = new Request<Serializable>();
+        Request<?> request = new Request<>();
         ActionHeader actionHeader = new ActionHeader();
         actionHeader.setType("other_handler");
         request.setHeader(actionHeader);
 
-        assertThat(ganeralRouter.handle(request), nullValue());
+        assertThat(mainRouter.handle(request), nullValue());
 
         verify(otherHandler, never()).handle(request);
     }
 
     @Configuration
-    public static class GenRouteTestCfg{
+    public static class MainRouterTestCfg{
 
         @Bean(name = "authorization")
         public TypeRouterHandler handler(){
