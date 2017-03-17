@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Виктор on 13.03.2017.
  */
-public class OtherProfilesRequest implements RequestData {
+public class GetOtherProfilesRequest implements RequestData {
     private static final long serialVersionUID = -3952758678326330898L;
 
     private List<Integer> listOfId;

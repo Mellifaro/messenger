@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Виктор on 13.03.2017.
  */
-public class ContactSynchronizeRequest implements RequestData {
+public class ContactSyncRequest implements RequestData {
     private static final long serialVersionUID = -398253932013621621L;
 
     private List<Contact> addedContacts;

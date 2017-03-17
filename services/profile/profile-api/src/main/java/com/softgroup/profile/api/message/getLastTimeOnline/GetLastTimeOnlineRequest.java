@@ -1,6 +1,6 @@
-package com.softgroup.profile.api.message.getOtherProfiles;
+package com.softgroup.profile.api.message.getLastTimeOnline;
 
-import com.softgroup.common.protocol.ResponseData;
+import com.softgroup.common.protocol.RequestData;
 import com.softgroup.profile.api.model.Profile;
 
 import java.util.List;
@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Created by Виктор on 13.03.2017.
  */
-public class OtherProfilesResponse implements ResponseData {
-    private static final long serialVersionUID = -6406511219293276629L;
+public class GetLastTimeOnlineRequest implements RequestData {
+    private static final long serialVersionUID = 1662125620037293178L;
 
     private List<Profile> profileList;
 

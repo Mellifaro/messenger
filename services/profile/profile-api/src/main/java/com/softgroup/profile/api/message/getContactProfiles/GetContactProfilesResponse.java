@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Виктор on 13.03.2017.
  */
-public class ContactProfilesResponse implements ResponseData {
+public class GetContactProfilesResponse implements ResponseData {
     private static final long serialVersionUID = 2443261391339528805L;
 
     private List<Profile> profileList;

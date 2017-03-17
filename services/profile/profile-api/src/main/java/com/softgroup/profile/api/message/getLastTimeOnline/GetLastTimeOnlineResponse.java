@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Виктор on 13.03.2017.
  */
-public class LastTimeOnlineResponse implements ResponseData {
+public class GetLastTimeOnlineResponse implements ResponseData {
     private static final long serialVersionUID = 2588010261803808427L;
 
     private List<ProfileStatus> statuses;

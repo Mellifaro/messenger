@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Виктор on 13.03.2017.
  */
-public class ContactSynchronizeResponse implements ResponseData {
+public class ContactSyncResponse implements ResponseData {
     private static final long serialVersionUID = 7431394305767199598L;
 
     private List<Contact> contactList;
