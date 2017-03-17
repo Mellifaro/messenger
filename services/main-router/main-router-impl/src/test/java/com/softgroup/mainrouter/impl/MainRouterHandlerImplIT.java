@@ -1,10 +1,12 @@
-package com.softgroup.common.router.api;
+package com.softgroup.mainrouter.impl;
 
 import com.softgroup.common.protocol.ActionHeader;
 import com.softgroup.common.protocol.Request;
+import com.softgroup.common.router.api.RouterHandler;
 import com.softgroup.common.router.api.configuration.CommonRouterAppCfg;
-import com.softgroup.common.router.api.routers.MainRouterHandler;
 import com.softgroup.common.router.api.routers.TypeRouterHandler;
+import com.softgroup.mainrouter.api.MainRouterHandler;
+import com.softgroup.mainrouter.impl.configuration.MainRouterAppCfg;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +15,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.Serializable;
+
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- * Created by Виктор on 13.03.2017.
+ * Created by Виктор on 17.03.2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {MainRouterHandlerImplIT.MainRouterTestCfg.class, CommonRouterAppCfg.class})
+@ContextConfiguration(classes = {MainRouterHandlerImplIT.MainRouterTestCfg.class, MainRouterAppCfg.class})
 public class MainRouterHandlerImplIT {
 
     @Autowired
@@ -42,7 +49,7 @@ public class MainRouterHandlerImplIT {
 
     @Test
     public void testRoute(){
-        Request<?> request = new Request<>();
+        Request<?> request = new Request<Serializable>();
         ActionHeader actionHeader = new ActionHeader();
         actionHeader.setType("authorization");
         request.setHeader(actionHeader);
@@ -56,7 +63,7 @@ public class MainRouterHandlerImplIT {
 
     @Test
     public void testOnlyTypeRoutersExistInGeneralRouter(){
-        Request<?> request = new Request<>();
+        Request<?> request = new Request<Serializable>();
         ActionHeader actionHeader = new ActionHeader();
         actionHeader.setType("other_handler");
         request.setHeader(actionHeader);
