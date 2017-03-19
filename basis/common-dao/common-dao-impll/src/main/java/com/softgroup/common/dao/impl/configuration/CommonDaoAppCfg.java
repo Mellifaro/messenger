@@ -1,5 +1,6 @@
 package com.softgroup.common.dao.impl.configuration;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,14 @@ public class CommonDaoAppCfg {
     private static final String[] ENTITY_PACKAGES = {
             "com.softgroup.common.dao.api.entities"
     };
+
+    @Bean
+    public SpringLiquibase liquibase(){
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:changelogs/changelog.xml");
+        liquibase.setDataSource(dataSource());
+        return liquibase;
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -67,7 +76,7 @@ public class CommonDaoAppCfg {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        //properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
     }

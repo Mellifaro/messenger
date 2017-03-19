@@ -22,6 +22,7 @@
 
         <!--DB-->
         <postgresql.version>9.4.1208</postgresql.version>
+        <liquibase.version>3.5.3</liquibase.version>
     </properties>
 
     <dependencyManagement>
@@ -52,6 +53,13 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
+        </dependency>
+
+        <!--liquibase-->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
 
     </dependencies>
