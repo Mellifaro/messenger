@@ -1,12 +1,14 @@
-package com.softgroup.mainrouter.impl;
+package com.softgroup.mainrouter.imp;
 
+/**
+ * Created by Виктор on 25.03.2017.
+ */
 import com.softgroup.common.protocol.ActionHeader;
 import com.softgroup.common.protocol.Request;
 import com.softgroup.common.router.api.RouterHandler;
-import com.softgroup.common.router.api.configuration.CommonRouterAppCfg;
-import com.softgroup.common.router.api.routers.TypeRouterHandler;
+import com.softgroup.common.router.api.TypeRouterHandler;
 import com.softgroup.mainrouter.api.MainRouterHandler;
-import com.softgroup.mainrouter.impl.configuration.MainRouterAppCfg;
+import com.softgroup.mainrouter.imp.configuration.MainRouterAppCfg;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.Serializable;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -49,7 +49,7 @@ public class MainRouterHandlerImplIT {
 
     @Test
     public void testRoute(){
-        Request<?> request = new Request<Serializable>();
+        Request<?> request = new Request<>();
         ActionHeader actionHeader = new ActionHeader();
         actionHeader.setType("authorization");
         request.setHeader(actionHeader);
@@ -63,7 +63,7 @@ public class MainRouterHandlerImplIT {
 
     @Test
     public void testOnlyTypeRoutersExistInGeneralRouter(){
-        Request<?> request = new Request<Serializable>();
+        Request<?> request = new Request<>();
         ActionHeader actionHeader = new ActionHeader();
         actionHeader.setType("other_handler");
         request.setHeader(actionHeader);
