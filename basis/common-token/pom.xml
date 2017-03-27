@@ -11,6 +11,11 @@
 
     <artifactId>common-token</artifactId>
     <packaging>pom</packaging>
+
+    <properties>
+        <jjwt.version>0.6.0</jjwt.version>
+    </properties>
+
     <modules>
         <module>common-token-api</module>
         <module>common-token-impl</module>
@@ -25,7 +30,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.6.0</version>
+            <version>${jjwt.version}</version>
         </dependency>
     </dependencies>
 
