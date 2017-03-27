@@ -55,7 +55,7 @@ public class TokenServiceImpl implements TokenService{
                     .parseClaimsJws(jwtToken)
                     .getBody();
             return body != null
-                    && body.get("type").equals("device_token")
+                    && body.get("type").equals(type)
                     && (Long) body.get("exp") > System.currentTimeMillis();
         }catch (ClassCastException | JwtException e){
             e.printStackTrace();
