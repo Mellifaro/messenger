@@ -1,7 +1,7 @@
-package com.softgroup.mainrouter.impl;
+package com.softgroup.mainrouter.imp;
 
+import com.softgroup.common.router.api.TypeRouterHandler;
 import com.softgroup.common.router.api.factories.AbstractHandlerFactory;
-import com.softgroup.common.router.api.routers.TypeRouterHandler;
 import org.springframework.stereotype.Component;
 
 /**

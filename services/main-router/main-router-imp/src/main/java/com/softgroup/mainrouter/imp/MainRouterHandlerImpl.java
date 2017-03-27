@@ -1,10 +1,8 @@
-package com.softgroup.mainrouter.impl;
+package com.softgroup.mainrouter.imp;
 
 import com.softgroup.common.protocol.Request;
 import com.softgroup.common.router.api.AbstractRouterHandler;
-import com.softgroup.common.router.api.CommonRouterHandler;
-import com.softgroup.common.router.api.RouterHandler;
-import com.softgroup.common.router.api.routers.TypeRouterHandler;
+import com.softgroup.common.router.api.TypeRouterHandler;
 import com.softgroup.mainrouter.api.MainRouterHandler;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MainRouterHandlerImpl extends AbstractRouterHandler<TypeRouterHandler>
-                                   implements MainRouterHandler {
+        implements MainRouterHandler {
 
     public static final String NAME = "main_router";
 
