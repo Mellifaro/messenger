@@ -6,5 +6,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 /**
  * Created by Виктор on 17.03.2017.
  */
-public interface ProfileRepository extends PagingAndSortingRepository<ProfileEntity, String>{
+public interface ProfileRepository extends BaseRepository<ProfileEntity>{
 }
