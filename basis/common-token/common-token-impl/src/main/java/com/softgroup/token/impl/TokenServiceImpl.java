@@ -2,6 +2,7 @@ package com.softgroup.token.impl;
 
 
 import com.softgroup.common.token.api.TokenService;
+import com.softgroup.common.token.api.TokenType;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,10 @@ public class TokenServiceImpl implements TokenService{
     private static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
 
     @Override
-    public String generateToken(String userId, Long timeleft, String typeToken) {
+    public String generateToken(String userId, Long timeleft, TokenType type, String deviceId) {
         Claims claims = Jwts.claims().setSubject(userId);
-        claims.put("type", typeToken);
-
+        claims.put("type", type);
+        claims.put("deviceId", deviceId);
 
         JwtBuilder builder = Jwts.builder()
                 .setClaims(claims)
@@ -34,21 +35,20 @@ public class TokenServiceImpl implements TokenService{
     }
 
     @Override
-    public String getUserId(String jwtToken) {
+    public String getParameter(String jwtToken, String key) {
         try{
             Claims body = Jwts.parser()
                     .setSigningKey(KEY)
                     .parseClaimsJws(jwtToken)
                     .getBody();
-            return (String) body.get("sub");
+            return (String) body.get(key);
         }catch (ClassCastException | JwtException e){
-            e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public boolean validateToken(String jwtToken, String type) {
+    public boolean validateToken(String jwtToken, TokenType type) {
         try{
             Claims body = Jwts.parser()
                     .setSigningKey(KEY)
@@ -58,7 +58,6 @@ public class TokenServiceImpl implements TokenService{
                     && body.get("type").equals(type)
                     && (Long) body.get("exp") > System.currentTimeMillis();
         }catch (ClassCastException | JwtException e){
-            e.printStackTrace();
             return false;
         }
     }
