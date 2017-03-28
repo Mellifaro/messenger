@@ -1,7 +1,6 @@
 package com.softgroup.common.dao.api.entities;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,13 +8,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "profiles")
-public class ProfileEntity implements Serializable {
-
+public class ProfileEntity extends BaseEntity {
     private static final long serialVersionUID = 2645460488213358603L;
-
-    @Id
-    @Column(name = "id")
-    private String id;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -37,14 +31,6 @@ public class ProfileEntity implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "profile")
     private List<ProfileSettingsEntity> settingsEntities;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -109,7 +95,7 @@ public class ProfileEntity implements Serializable {
 
         ProfileEntity that = (ProfileEntity) o;
 
-        if (!id.equals(that.id)) return false;
+        if (!getId().equals(that.getId())) return false;
         if (!phoneNumber.equals(that.phoneNumber)) return false;
         if (!createDateTime.equals(that.createDateTime)) return false;
         if (!updateDateTime.equals(that.updateDateTime)) return false;
@@ -120,7 +106,7 @@ public class ProfileEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = getId().hashCode();
         result = 31 * result + phoneNumber.hashCode();
         result = 31 * result + createDateTime.hashCode();
         result = 31 * result + updateDateTime.hashCode();

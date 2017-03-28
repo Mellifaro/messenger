@@ -9,8 +9,8 @@
 
     <changeSet author="Mellifaro" id="changeset1">
         <createTable tableName="profiles">
-            <column name="id" type="varchar(255)" />
-            <column name="phone_number" type="varchar(255)" />
+            <column name="id" type="varchar(36)" />
+            <column name="phone_number" type="varchar(20)" />
             <column name="create_date_time" type="BIGINT" />
             <column name="update_date_time" type="BIGINT" />
             <column name="name" type="varchar(255)" />
@@ -19,15 +19,15 @@
         </createTable>
 
         <createTable tableName="profile_settings">
-            <column name="id" type="varchar(255)" />
+            <column name="id" type="varchar(36)" />
             <column name="settings_data" type="varchar(255)" />
-            <column name="profile_id" type="varchar(255)" />
+            <column name="profile_id" type="varchar(36)" />
         </createTable>
 
         <createTable tableName="devices">
-            <column name="id" type="varchar(255)" />
+            <column name="id" type="varchar(36)" />
             <column name="confirmation_time" type="BIGINT" />
-            <column name="profile_id" type="varchar(255)" />
+            <column name="profile_id" type="varchar(36)" />
         </createTable>
     </changeSet>
 
