@@ -44,7 +44,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean{
 
         //put userId to session
         String userId = tokenService.getUserId(token);
+        String sessionId = session.getId();
         session.setAttribute("userId", userId);
+        session.setAttribute("sessionId", sessionId);
 
         chain.doFilter(request, response);
     }

@@ -2,7 +2,7 @@ package com.softgroup.rest.impl.controllers;
 
 import com.softgroup.authorization.api.router.AuthorizationRouterHandler;
 import com.softgroup.common.protocol.Request;
-import com.softgroup.rest.impl.CommonData;
+import com.softgroup.common.router.api.CommonData;
 import com.softgroup.rest.impl.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

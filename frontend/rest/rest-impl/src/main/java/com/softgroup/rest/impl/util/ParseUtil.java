@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.softgroup.common.datamapper.DataMapper;
 import com.softgroup.common.protocol.Request;
 import com.softgroup.common.protocol.RoutedData;
-import com.softgroup.rest.impl.CommonData;
+import com.softgroup.common.router.api.CommonData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

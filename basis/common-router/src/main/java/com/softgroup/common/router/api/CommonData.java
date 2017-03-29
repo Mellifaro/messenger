@@ -1,4 +1,4 @@
-package com.softgroup.rest.impl;
+package com.softgroup.common.router.api;
 
 import java.io.Serializable;
 
