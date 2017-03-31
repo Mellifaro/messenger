@@ -10,7 +10,6 @@ public class RoutedData implements Serializable{
 
     private String userId;
     private String deviceId;
-    private String sessionUUID;
 
     public String getUserId() {
         return userId;
@@ -26,13 +25,5 @@ public class RoutedData implements Serializable{
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
-    }
-
-    public String getSessionUUID() {
-        return sessionUUID;
-    }
-
-    public void setSessionUUID(String sessionUUID) {
-        this.sessionUUID = sessionUUID;
     }
 }

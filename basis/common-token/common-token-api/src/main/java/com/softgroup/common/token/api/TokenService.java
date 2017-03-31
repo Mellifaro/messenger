@@ -5,8 +5,7 @@ package com.softgroup.common.token.api;
  */
 public interface TokenService {
 
-    //todo delete parameter timeleft?
-    String generateToken(String userId, Long timeleft, TokenType type, String deviceId);
+    String generateToken(String userId, String deviceId, TokenType type);
 
     String getParameter(String jwtToken, String key);
 

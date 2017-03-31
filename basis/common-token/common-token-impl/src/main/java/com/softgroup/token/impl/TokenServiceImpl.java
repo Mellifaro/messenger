@@ -17,7 +17,7 @@ public class TokenServiceImpl implements TokenService{
     private static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
 
     @Override
-    public String generateToken(String userId, Long timeleft, TokenType type, String deviceId) {
+    public String generateToken(String userId, String deviceId, TokenType type) {
         Claims claims = Jwts.claims().setSubject(userId);
         claims.put("type", type);
         claims.put("deviceId", deviceId);
@@ -26,11 +26,14 @@ public class TokenServiceImpl implements TokenService{
                 .setClaims(claims)
                 .signWith(SIGNATURE_ALGORITHM, KEY);
 
-        if(timeleft >= 0){
-            long expMillis = System.currentTimeMillis() + timeleft;
+        long expMillis = System.currentTimeMillis();
+        switch (type){
+            case REGISTER_TOKEN: expMillis += 10000000000L; break;
+            case DEVICE_TOKEN:   expMillis += 300000L; break;
+        }
             Date exp = new Date(expMillis);
             builder.setExpiration(exp);
-        }
+
         return builder.compact();
     }
 
