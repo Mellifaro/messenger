@@ -3,6 +3,7 @@ package com.softgroup.token.impl;
 
 import com.softgroup.common.exceptions.SoftgroupException;
 import com.softgroup.common.token.api.TokenService;
+import com.softgroup.common.token.api.TokenType;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
@@ -17,33 +18,35 @@ public class TokenServiceImpl implements TokenService{
     private static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
 
     @Override
-    public String generateToken(String userId, Long timeleft, String typeToken) {
+    public String generateToken(String userId, String deviceId, TokenType type) {
         Claims claims = Jwts.claims().setSubject(userId);
-        claims.put("type", typeToken);
-
+        claims.put("type", type);
+        claims.put("deviceId", deviceId);
 
         JwtBuilder builder = Jwts.builder()
                 .setClaims(claims)
                 .signWith(SIGNATURE_ALGORITHM, KEY);
 
-        if(timeleft >= 0){
-            long expMillis = System.currentTimeMillis() + timeleft;
+        long expMillis = System.currentTimeMillis();
+        switch (type){
+            case REGISTER_TOKEN: expMillis += 10000000000L; break;
+            case DEVICE_TOKEN:   expMillis += 300000L; break;
+        }
             Date exp = new Date(expMillis);
             builder.setExpiration(exp);
-        }
+
         return builder.compact();
     }
 
     @Override
-    public String getUserId(String jwtToken) {
+    public String getParameter(String jwtToken, String key) {
         try{
             Claims body = Jwts.parser()
                     .setSigningKey(KEY)
                     .parseClaimsJws(jwtToken)
                     .getBody();
-            return (String) body.get("sub");
+            return (String) body.get(key);
         }catch (ClassCastException | JwtException e){
-            e.printStackTrace();
             return null;
         }
     }
@@ -69,19 +72,4 @@ public class TokenServiceImpl implements TokenService{
         else
             throw new SoftgroupException("Token expired date error");
     }
-
-
-//        try{
-//            Claims body = Jwts.parser()
-//                    .setSigningKey(KEY)
-//                    .parseClaimsJws(jwtToken)
-//                    .getBody();
-//            return body != null
-//                    && body.get("type").equals(type)
-//                    && (Long) body.get("exp") > System.currentTimeMillis();
-//        }catch (ClassCastException | JwtException e){
-//            e.printStackTrace();
-//            return false;
-//        }
-
 }

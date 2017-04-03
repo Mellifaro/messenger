@@ -9,7 +9,7 @@ public class RoutedData implements Serializable{
     private static final long serialVersionUID = 3930278156237773465L;
 
     private String userId;
-    private String sessionUUID;
+    private String deviceId;
 
     public String getUserId() {
         return userId;
@@ -19,11 +19,11 @@ public class RoutedData implements Serializable{
         this.userId = userId;
     }
 
-    public String getSessionUUID() {
-        return sessionUUID;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setSessionUUID(String sessionUUID) {
-        this.sessionUUID = sessionUUID;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }
