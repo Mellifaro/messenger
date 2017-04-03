@@ -34,12 +34,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Filter jwtAuthenticationFilter;
 
-//    @Autowired
-//    private AuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
-
-//    @Autowired
-//    private AuthenticationManager jwtAuthenticationManager;
-
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -59,17 +53,3 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").authenticated();
     }
 }
-
-//    @Bean
-//    public RestAuthenticationSuccessHandler mySuccessHandler(){
-//        return new RestAuthenticationSuccessHandler();
-//    }
-//    @Bean
-//    public SimpleUrlAuthenticationFailureHandler myFailureHandler(){
-//        return new SimpleUrlAuthenticationFailureHandler();
-//    }
-//
-//    @Override
-//    protected AuthenticationManager authenticationManager() throws Exception {
-//        return super.authenticationManager();
-//    }

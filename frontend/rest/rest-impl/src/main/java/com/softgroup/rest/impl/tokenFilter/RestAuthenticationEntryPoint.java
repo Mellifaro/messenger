@@ -12,7 +12,6 @@ import java.io.IOException;
 /**
  * Created by Виктор on 20.03.2017.
  */
-//todo ready
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint{
 

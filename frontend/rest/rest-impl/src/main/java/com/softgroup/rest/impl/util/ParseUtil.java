@@ -32,7 +32,7 @@ public class ParseUtil {
 
         RoutedData routedData = new RoutedData();
         routedData.setUserId((String) session.getAttribute("userId"));
-        routedData.setSessionUUID(session.getId());
+        //routedData.setSessionUUID(session.getId());
 
         parsedRequest.setRoutedData(routedData);
 

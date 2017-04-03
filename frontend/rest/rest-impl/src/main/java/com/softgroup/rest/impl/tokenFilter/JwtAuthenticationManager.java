@@ -1,6 +1,7 @@
 package com.softgroup.rest.impl.tokenFilter;
 
 import com.softgroup.common.token.api.TokenService;
+import com.softgroup.common.token.api.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ public class JwtAuthenticationManager implements AuthenticationManager {
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         JwtAuthenticationToken jwtToken = (JwtAuthenticationToken)authentication;
-        authentication.setAuthenticated(tokenService.validateToken(jwtToken.getJwtToken(), "device_token"));
+        authentication.setAuthenticated(tokenService.validateToken(jwtToken.getJwtToken(), TokenType.DEVICE_TOKEN));
         return authentication;
     }
 

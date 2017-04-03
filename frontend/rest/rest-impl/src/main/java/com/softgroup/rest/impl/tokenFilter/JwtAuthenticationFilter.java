@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         Authentication authentication = getAuthenticationManager().authenticate(tokenAuthentication);
 
         HttpSession session = httpServletRequest.getSession();
-        String userId = tokenService.getUserId(token);
+        String userId = tokenService.getParameter(token, "sub");
         session.setAttribute("userId", userId);
 
         return authentication;
