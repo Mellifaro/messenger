@@ -18,8 +18,7 @@ public class JwtAuthenticationManager implements AuthenticationManager {
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         JwtAuthenticationToken jwtToken = (JwtAuthenticationToken)authentication;
-        boolean isAuthenticated = tokenService.validateToken(jwtToken.getJwtToken(), "device_token");
-        authentication.setAuthenticated(isAuthenticated);
+        authentication.setAuthenticated(tokenService.validateToken(jwtToken.getJwtToken(), "device_token"));
         return authentication;
     }
 

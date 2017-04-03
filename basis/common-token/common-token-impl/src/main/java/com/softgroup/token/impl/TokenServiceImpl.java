@@ -1,6 +1,7 @@
 package com.softgroup.token.impl;
 
 
+import com.softgroup.common.exceptions.SoftgroupException;
 import com.softgroup.common.token.api.TokenService;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
@@ -49,17 +50,38 @@ public class TokenServiceImpl implements TokenService{
 
     @Override
     public boolean validateToken(String jwtToken, String type) {
-        try{
-            Claims body = Jwts.parser()
+        Claims body;
+        try {
+            body = Jwts.parser()
                     .setSigningKey(KEY)
                     .parseClaimsJws(jwtToken)
                     .getBody();
-            return body != null
-                    && body.get("type").equals(type)
-                    && (Long) body.get("exp") > System.currentTimeMillis();
-        }catch (ClassCastException | JwtException e){
-            e.printStackTrace();
-            return false;
+        }catch (Exception e){
+            throw new SoftgroupException("Token corrupted");
         }
+        if(!body.get("type").equals(type)){
+            throw new SoftgroupException("Token's type is wrong");
+        }
+        Date expiredDate = new Date(body.get("exp", Long.class));
+
+        if (expiredDate.after(new Date()))
+            return true;
+        else
+            throw new SoftgroupException("Token expired date error");
     }
+
+
+//        try{
+//            Claims body = Jwts.parser()
+//                    .setSigningKey(KEY)
+//                    .parseClaimsJws(jwtToken)
+//                    .getBody();
+//            return body != null
+//                    && body.get("type").equals(type)
+//                    && (Long) body.get("exp") > System.currentTimeMillis();
+//        }catch (ClassCastException | JwtException e){
+//            e.printStackTrace();
+//            return false;
+//        }
+
 }
