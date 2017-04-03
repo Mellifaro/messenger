@@ -16,6 +16,7 @@
 		<module>authorization</module>
 		<module>main-router</module>
 		<module>profile</module>
+		<module>messenger</module>
 	</modules>
 
 	<properties>
