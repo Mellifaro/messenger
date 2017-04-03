@@ -18,6 +18,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.Filter;
+
 /**
  * Created by Виктор on 20.03.2017.
  */
@@ -30,13 +32,13 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Autowired
-    private AuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
+    private Filter jwtAuthenticationFilter;
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+//    @Autowired
+//    private AuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
 
-    @Autowired
-    private AuthenticationManager jwtAuthenticationManager;
+//    @Autowired
+//    private AuthenticationManager jwtAuthenticationManager;
 
 
     @Override
@@ -52,9 +54,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
-                .authorizeRequests().anyRequest().authenticated()
-                .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests()
+                .antMatchers("/**").authenticated();
     }
 }
 

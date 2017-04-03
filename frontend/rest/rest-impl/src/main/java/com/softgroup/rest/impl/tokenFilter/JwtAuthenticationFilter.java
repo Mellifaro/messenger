@@ -1,27 +1,27 @@
 package com.softgroup.rest.impl.tokenFilter;
 
-import com.softgroup.common.exceptions.SoftgroupException;
 import com.softgroup.common.token.api.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
 
-import javax.servlet.FilterChain;
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
  * Created by Виктор on 20.03.2017.
  */
-//todo ready
 @Component
-public class JwtAuthenticationFilter extends GenericFilterBean{
+public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     @Autowired
     private TokenService tokenService;
@@ -29,23 +29,41 @@ public class JwtAuthenticationFilter extends GenericFilterBean{
     @Autowired
     private AuthenticationManager jwtAuthenticationManager;
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    @Autowired
+    private AuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
+
+    @Autowired
+    private AuthenticationFailureHandler jwtAuthenticationFailureHandler;
+
+    public JwtAuthenticationFilter() {
+        super("/**");
+    }
+
+    @PostConstruct
+    public void init(){
+        setAuthenticationSuccessHandler(jwtAuthenticationSuccessHandler);
+        setAuthenticationFailureHandler(jwtAuthenticationFailureHandler);
+        setAuthenticationManager(jwtAuthenticationManager);
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
+        JwtAuthenticationToken tokenAuthentication;
+
         //receive jwt token from header "Authorization"
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String token = httpRequest.getHeader("Authorization");
+        String token = httpServletRequest.getHeader("Authorization");
         if(token == null){
-            throw new SoftgroupException("No JWT token found in request headers");
+            tokenAuthentication = new JwtAuthenticationToken(null);
+            tokenAuthentication.setAuthenticated(false);
+            return tokenAuthentication;
         }
+        tokenAuthentication = new JwtAuthenticationToken(token);
+        Authentication authentication = getAuthenticationManager().authenticate(tokenAuthentication);
 
-        //create authentication and delegates authentication process to the auth manager
-        JwtAuthenticationToken jwtToken = new JwtAuthenticationToken(token);
-        SecurityContextHolder.getContext().setAuthentication(jwtAuthenticationManager.authenticate(jwtToken));
-        HttpSession session = ((HttpServletRequest) request).getSession();
-
-        //put userId to session
+        HttpSession session = httpServletRequest.getSession();
         String userId = tokenService.getUserId(token);
         session.setAttribute("userId", userId);
 
-        chain.doFilter(request, response);
+        return authentication;
     }
 }
