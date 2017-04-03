@@ -13,7 +13,7 @@ public class DeviceEntity extends BaseEntity{
     @Column(name = "confirmation_time")
     private Long confirmTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
     private ProfileEntity profile;
 

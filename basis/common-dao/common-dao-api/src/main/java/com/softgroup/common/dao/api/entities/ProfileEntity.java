@@ -11,9 +11,6 @@ import java.util.List;
 public class ProfileEntity extends BaseEntity {
     private static final long serialVersionUID = 2645460488213358603L;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "create_date_time")
     private Long createDateTime;
 
@@ -24,21 +21,14 @@ public class ProfileEntity extends BaseEntity {
     private String name;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ProfileStatus status;
 
     @Column(name = "avatar_uri")
     private String avatarUri;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "profile")
     private List<ProfileSettingsEntity> settingsEntities;
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
     public Long getCreateDateTime() {
         return createDateTime;
@@ -64,11 +54,11 @@ public class ProfileEntity extends BaseEntity {
         this.name = name;
     }
 
-    public String getStatus() {
+    public ProfileStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ProfileStatus status) {
         this.status = status;
     }
 
@@ -96,7 +86,6 @@ public class ProfileEntity extends BaseEntity {
         ProfileEntity that = (ProfileEntity) o;
 
         if (!getId().equals(that.getId())) return false;
-        if (!phoneNumber.equals(that.phoneNumber)) return false;
         if (!createDateTime.equals(that.createDateTime)) return false;
         if (!updateDateTime.equals(that.updateDateTime)) return false;
         if (!name.equals(that.name)) return false;
@@ -107,7 +96,6 @@ public class ProfileEntity extends BaseEntity {
     @Override
     public int hashCode() {
         int result = getId().hashCode();
-        result = 31 * result + phoneNumber.hashCode();
         result = 31 * result + createDateTime.hashCode();
         result = 31 * result + updateDateTime.hashCode();
         result = 31 * result + name.hashCode();
