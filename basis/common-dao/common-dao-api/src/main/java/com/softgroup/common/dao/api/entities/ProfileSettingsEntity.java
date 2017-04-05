@@ -15,7 +15,8 @@ public class ProfileSettingsEntity extends BaseEntity {
     @Column(name = "settings_data")
     private String settingsData;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", nullable = false)
     private ProfileEntity profile;
 
     public String getSettingsData() {
