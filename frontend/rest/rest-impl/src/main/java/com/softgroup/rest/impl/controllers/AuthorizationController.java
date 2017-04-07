@@ -3,6 +3,7 @@ package com.softgroup.rest.impl.controllers;
 import com.softgroup.authorization.api.router.AuthorizationRouterHandler;
 import com.softgroup.common.protocol.Request;
 import com.softgroup.common.router.api.CommonData;
+import com.softgroup.rest.api.AuthorizationCheckHandler;
 import com.softgroup.rest.impl.util.ParseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,15 +27,15 @@ import java.io.IOException;
 public class AuthorizationController {
 
     @Autowired
-    private AuthorizationRouterHandler authorizationHandler;
+    private AuthorizationCheckHandler authCheckHandler;
 
     @Autowired
     private ParseUtil parseUtil;
 
     @RequestMapping(path = {"/login", "/register", "sms_confirm"})
     public String authorizate(HttpServletRequest request, HttpSession session) throws IOException {
-        Request<CommonData> parsedRequest = parseUtil.parseHttpRequest(request, session);
-        authorizationHandler.handle(parsedRequest);
+        Request<?> parsedRequest = parseUtil.parseHttpRequest(request, session);
+        authCheckHandler.handle(parsedRequest);
         //todo finish method
         return "test1";
     }

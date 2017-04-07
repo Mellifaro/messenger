@@ -33,7 +33,7 @@ public class CommonController {
 
     @RequestMapping(path = "/**")
     public String handle(HttpServletRequest request, HttpSession session) throws IOException {
-        Request<CommonData> parsedRequest = parseUtil.parseHttpRequest(request, session);
+        Request<?> parsedRequest = parseUtil.parseHttpRequest(request, session);
         mainRouter.handle(parsedRequest);
 
         //todo finish method

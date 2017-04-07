@@ -3,6 +3,7 @@ package com.softgroup.authorization.impl.util;
 /**
  * Created by Виктор on 28.03.2017.
  */
+import com.softgroup.authorization.api.dto.ProfileDTO;
 import net.jodah.expiringmap.ExpiringMap;
 import org.springframework.stereotype.Component;
 
@@ -15,19 +16,19 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class SmsConfirmUtil {
 
-    private Map<String, Integer> cache;
+    private Map<String, ProfileDTO> cache;
 
     public SmsConfirmUtil() {
         cache = ExpiringMap.builder()
-                .expiration(10, TimeUnit.MINUTES)
+                .expiration(2, TimeUnit.MINUTES)
                 .build();
     }
 
-    public Map<String, Integer> getCache() {
+    public Map<String, ProfileDTO> getCache() {
         return cache;
     }
 
-    public void setCache(Map<String, Integer> cache) {
+    public void setCache(Map<String, ProfileDTO> cache) {
         this.cache = cache;
     }
 }

@@ -32,6 +32,11 @@ public class ProfileEntity extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "profile")
     private List<ProfileSettingsEntity> settingsEntities;
 
+    public ProfileEntity() {
+        this.createDateTime = System.currentTimeMillis();
+        this.status = "ACTIVE";
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

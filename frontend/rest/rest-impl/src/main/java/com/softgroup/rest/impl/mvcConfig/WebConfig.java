@@ -4,6 +4,7 @@ package com.softgroup.rest.impl.mvcConfig;
  * Created by Виктор on 27.03.2017.
  */
 import com.softgroup.authorization.impl.configuration.AuthorizationAppCfg;
+import com.softgroup.common.dao.impl.configuration.CommonDaoAppCfg;
 import com.softgroup.common.datamapper.configuration.DataMapperAppCfg;
 import com.softgroup.mainrouter.imp.configuration.MainRouterAppCfg;
 import com.softgroup.rest.impl.securityConfig.AppSecurityConfig;
@@ -27,7 +28,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
         MainRouterAppCfg.class,
         AuthorizationAppCfg.class,
         DataMapperAppCfg.class,
-        TokenAppCfg.class
+        TokenAppCfg.class,
+        CommonDaoAppCfg.class
 })
 public class WebConfig {
 }

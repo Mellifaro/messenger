@@ -4,6 +4,8 @@ package com.softgroup.common.dao.api.entities;
  * Created by Виктор on 28.03.2017.
  */
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,7 +14,12 @@ import java.io.Serializable;
 public abstract class BaseEntity implements Serializable{
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", nullable = false)
     private String id;
 
     public BaseEntity() {

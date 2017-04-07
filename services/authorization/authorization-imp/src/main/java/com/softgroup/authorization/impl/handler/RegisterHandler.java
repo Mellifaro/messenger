@@ -1,15 +1,13 @@
 package com.softgroup.authorization.impl.handler;
 
+import com.softgroup.authorization.api.dto.ProfileDTO;
 import com.softgroup.authorization.api.message.register.RegisterRequest;
 import com.softgroup.authorization.api.message.register.RegisterResponse;
 import com.softgroup.authorization.api.router.AuthorizationRequestHandler;
 import com.softgroup.authorization.impl.util.SmsConfirmUtil;
 import com.softgroup.common.dao.api.entities.DeviceEntity;
 import com.softgroup.common.dao.api.entities.ProfileEntity;
-import com.softgroup.common.protocol.ActionHeader;
-import com.softgroup.common.protocol.Request;
-import com.softgroup.common.protocol.Response;
-import com.softgroup.common.protocol.ResponseStatus;
+import com.softgroup.common.protocol.*;
 import com.softgroup.common.router.api.AbstractRequestHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +23,7 @@ public class RegisterHandler extends AbstractRequestHandler<RegisterRequest, Reg
         implements AuthorizationRequestHandler {
 
     private static final String HANDLER_NAME = "register";
+    private static final Integer REGISTRATION_TIMEOUT_SEC = 60;
 
     @Autowired
     private SmsConfirmUtil confirmUtil;
@@ -37,44 +36,26 @@ public class RegisterHandler extends AbstractRequestHandler<RegisterRequest, Reg
     public Response<RegisterResponse> handle(Request<?> msg) {
         Request<RegisterRequest> request = convert(msg);
 
-        //make codes generator
-        ProfileEntity profile = new ProfileEntity();
+        //put data from request to profileDTO
+        Integer authCode = new Random().nextInt(100000);
+        ProfileDTO profileDTO = new ProfileDTO();
+        profileDTO.setPhoneNumber(request.getData().getPhoneNumber());
+        profileDTO.setLocaleCode(request.getData().getLocalCode());
+        profileDTO.setDeviceId(request.getData().getDeviceId());
+        profileDTO.setAuthCode(authCode);
 
-        profile.setId(UUID.randomUUID().toString());
-        profile.setCreateDateTime(System.currentTimeMillis());
-        profile.setPhoneNumber(request.getData().getPhoneNumber());
+        //put sessionUUID and profileDTO to expiredMap
+        String registrationRequestUUID = UUID.randomUUID().toString();
+        confirmUtil.getCache().put(registrationRequestUUID, profileDTO);
 
-        DeviceEntity device = new DeviceEntity();
-        device.setId(request.getData().getDeviceId());
-        device.setProfile(profile);
-//
-//        profileService.save(new ProfileEntity());
-//        deviceService.save(new DeviceEntity());
-//
-//        Random randomGenerator = new Random();
-//        Integer confirmationCode = randomGenerator.nextInt(100000);
-//        confirmUtil.getCache().put(request.getData().getPhoneNumber(), confirmationCode);
-//
-//
-//        Response<RegisterResponse> response = new Response<>();
-//        ActionHeader header = new ActionHeader();
-//        header.setUuid("200");
-//        header.setType("authorization");
-//        header.setCommand("register");
-//
-//        ResponseStatus status = new ResponseStatus();
-//        status.setCode(200);
-//
-//        RegisterResponse data = new RegisterResponse();
-//        data.setRegistrTimeoutSec(600);
-//        data.setRegRequestUUID(request.getRoutedData().getSessionId());
-//        data.setAuthCode(confirmationCode.toString());
-//
-//        response.setHeader(header);
-//        response.setData(data);
-//        response.setStatus(status);
-//
-//        return response;
-        return null;
+        //create RegisterResponse
+        RegisterResponse data = new RegisterResponse();
+        data.setRegRequestUUID(registrationRequestUUID);
+        data.setAuthCode(authCode);
+        data.setRegistrTimeoutSec(REGISTRATION_TIMEOUT_SEC);
+
+        ResponseFactory<RegisterResponse> responseFactory = new ResponseFactory<>();
+        Response<RegisterResponse> response = responseFactory.createResponse(msg, data, ResponseStatus.OK);
+        return response;
     }
 }
