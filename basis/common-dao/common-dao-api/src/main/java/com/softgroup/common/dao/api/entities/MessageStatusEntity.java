@@ -9,11 +9,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "message_statuses")
-public class MessageStatus extends BaseEntity{
+public class MessageStatusEntity extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "message_id", nullable = false)
-    private Message message;
+    private MessageEntity message;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -30,11 +30,11 @@ public class MessageStatus extends BaseEntity{
     @Column(name = "confirm_date")
     private Long confirmDate;
 
-    public Message getMessage() {
+    public MessageEntity getMessage() {
         return message;
     }
 
-    public void setMessage(Message message) {
+    public void setMessage(MessageEntity message) {
         this.message = message;
     }
 
@@ -73,9 +73,9 @@ public class MessageStatus extends BaseEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MessageStatus)) return false;
+        if (!(o instanceof MessageStatusEntity)) return false;
 
-        MessageStatus that = (MessageStatus) o;
+        MessageStatusEntity that = (MessageStatusEntity) o;
 
         if (status != that.status) return false;
         return confirmDate.equals(that.confirmDate);

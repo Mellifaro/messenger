@@ -9,7 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "messages")
-public class Message<T> extends BaseEntity{
+public class MessageEntity<T> extends BaseEntity{
+    private static final long serialVersionUID = 8973881020347471240L;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id", nullable = false)
@@ -83,9 +84,9 @@ public class Message<T> extends BaseEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Message)) return false;
+        if (!(o instanceof MessageEntity)) return false;
 
-        Message<?> message = (Message<?>) o;
+        MessageEntity<?> message = (MessageEntity<?>) o;
 
         if (payloadURL != null ? !payloadURL.equals(message.payloadURL) : message.payloadURL != null) return false;
         if (type != message.type) return false;
