@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "messages")
-public class MessageEntity<T> extends BaseEntity{
+public class MessageEntity extends BaseEntity{
     private static final long serialVersionUID = 8973881020347471240L;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -86,21 +86,21 @@ public class MessageEntity<T> extends BaseEntity{
         if (this == o) return true;
         if (!(o instanceof MessageEntity)) return false;
 
-        MessageEntity<?> message = (MessageEntity<?>) o;
+        MessageEntity that = (MessageEntity) o;
 
-        if (payloadURL != null ? !payloadURL.equals(message.payloadURL) : message.payloadURL != null) return false;
-        if (type != message.type) return false;
-        if (!createdDate.equals(message.createdDate)) return false;
-        return serverReceivedDate != null ? serverReceivedDate.equals(message.serverReceivedDate) : message.serverReceivedDate == null;
+        if (!payloadURL.equals(that.payloadURL)) return false;
+        if (type != that.type) return false;
+        if (!createdDate.equals(that.createdDate)) return false;
+        return serverReceivedDate.equals(that.serverReceivedDate);
 
     }
 
     @Override
     public int hashCode() {
-        int result = payloadURL != null ? payloadURL.hashCode() : 0;
+        int result = payloadURL.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + createdDate.hashCode();
-        result = 31 * result + (serverReceivedDate != null ? serverReceivedDate.hashCode() : 0);
+        result = 31 * result + serverReceivedDate.hashCode();
         return result;
     }
 }
