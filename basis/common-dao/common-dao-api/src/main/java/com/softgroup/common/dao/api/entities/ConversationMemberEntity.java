@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "conversation_members")
-public class ConversationMember extends BaseEntity{
+public class ConversationMemberEntity extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id", nullable = false)
@@ -27,9 +27,9 @@ public class ConversationMember extends BaseEntity{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ConversationMember)) return false;
+        if (!(o instanceof ConversationMemberEntity)) return false;
 
-        ConversationMember that = (ConversationMember) o;
+        ConversationMemberEntity that = (ConversationMemberEntity) o;
 
         if (status != that.status) return false;
         return joinDate != null ? joinDate.equals(that.joinDate) : that.joinDate == null;
